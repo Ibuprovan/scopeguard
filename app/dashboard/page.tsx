@@ -8,7 +8,6 @@ import type { Project } from '@/types'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { UpgradeButton } from '@/components/upgrade-button'
 
 export default function DashboardPage() {
   const { user, profile, loading: authLoading, signOut } = useAuth()
@@ -30,10 +29,6 @@ export default function DashboardPage() {
       })
       .catch(() => setLoading(false))
   }, [user, authLoading, router])
-
-  const activeProjects = projects.filter(p => p.status === 'active')
-  const isFree = profile?.plan === 'free'
-  const maxProjectsReached = isFree && activeProjects.length >= 2
 
   if (authLoading || loading) {
     return (
@@ -64,17 +59,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-2">
-          <h2 className="text-base font-semibold text-text-primary">我的项目</h2>
-          <Badge variant={isFree ? 'default' : 'green'}>
-            {isFree ? `免费 · ${activeProjects.length}/2` : 'Pro'}
-          </Badge>
-        </div>
-        {!maxProjectsReached && (
-          <Button size="sm" onClick={() => router.push('/projects/new')}>
-            新建项目
-          </Button>
-        )}
+        <h2 className="text-base font-semibold text-text-primary">我的项目</h2>
+        <Button size="sm" onClick={() => router.push('/projects/new')}>
+          新建项目
+        </Button>
       </div>
 
       {projects.length === 0 ? (
@@ -103,15 +91,6 @@ export default function DashboardPage() {
               <p className="text-sm text-text-muted">{project.client_name}</p>
             </Card>
           ))}
-        </div>
-      )}
-
-      {maxProjectsReached && (
-        <div className="mt-6 bg-surface-card border border-border rounded-xl p-5 text-center">
-          <p className="text-sm text-text-muted mb-3">
-            免费版最多 2 个活跃项目。升级 Pro 解锁无限项目。
-          </p>
-           <UpgradeButton />
         </div>
       )}
     </main>

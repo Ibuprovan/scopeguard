@@ -9,8 +9,6 @@ import { getScopeRequests, createScopeRequest, deleteScopeRequest } from '@/lib/
 import type { Project, Deliverable, DeliverableStatus, ScopeRequest } from '@/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
-import { UpgradeButton } from '@/components/upgrade-button'
 import { DeliverableList } from '@/components/deliverable-list'
 import { ScopeRequestForm } from '@/components/scope-request-form'
 import { DeviationDashboard } from '@/components/deviation-dashboard'
@@ -18,7 +16,7 @@ import { formatTimeAgo } from '@/lib/utils/format'
 
 export default function ProjectDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { user, profile, loading: authLoading } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [project, setProject] = useState<Project | null>(null)
   const [deliverables, setDeliverables] = useState<Deliverable[]>([])
   const [requests, setRequests] = useState<ScopeRequest[]>([])
@@ -79,7 +77,6 @@ export default function ProjectDetailPage() {
     setRequests(prev => prev.filter(r => r.id !== requestId))
   }
 
-  const isPro = profile?.plan === 'pro'
   const outOfScopeRequests = requests.filter(r => r.is_out_of_scope)
   const extraHours = outOfScopeRequests.reduce((sum, r) => sum + (r.estimated_hours ?? 0), 0)
 
@@ -196,23 +193,12 @@ export default function ProjectDetailPage() {
 
       {outOfScopeRequests.length > 0 && (
         <section className="mb-8">
-          {isPro ? (
-            <Button
-              fullWidth
-              onClick={() => router.push(`/projects/${id}/change-order`)}
-            >
-              生成变更报价单
-            </Button>
-          ) : (
-            <Card className="text-center">
-              <p className="text-sm text-text-muted mb-3">
-                发现 {outOfScopeRequests.length} 个超范围需求 · 升级 Pro 生成变更报价
-              </p>
-              <Button variant="primary" size="sm">
-                <UpgradeButton label="升级到 Pro · $4/月 ¥19/月" />
-              </Button>
-            </Card>
-          )}
+          <Button
+            fullWidth
+            onClick={() => router.push(`/projects/${id}/change-order`)}
+          >
+            生成变更报价单
+          </Button>
         </section>
       )}
 

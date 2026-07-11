@@ -29,25 +29,6 @@ export async function createProject(data: { name: string; client_name?: string; 
     });
   }
 
-  // Check profile plan first (single query), then count active projects
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('plan')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.plan === 'free') {
-    const { count } = await supabase
-      .from('projects')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-      .eq('status', 'active');
-
-    if (count !== null && count >= 2) {
-      throw new Error('免费版最多 2 个活跃项目，请升级到 Pro');
-    }
-  }
-
   const { data: project, error } = await supabase
     .from('projects')
     .insert({ user_id: user.id, name, client_name, hourly_rate })
@@ -107,19 +88,4 @@ export async function updateProjectStatus(id: string, status: 'active' | 'comple
   revalidatePath(`/projects/${id}`);
   revalidatePath('/dashboard');
   return data;
-}
-
-export async function getActiveProjectCount() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error('Not authenticated');
-
-  const { count, error } = await supabase
-    .from('projects')
-    .select('*', { count: 'exact', head: true })
-    .eq('user_id', user.id)
-    .eq('status', 'active');
-
-  if (error) throw error;
-  return count ?? 0;
 }

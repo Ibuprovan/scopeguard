@@ -22,7 +22,7 @@ const features = [
   {
     num: 3,
     title: '一键变更报价单',
-    desc: 'Pro 功能。所有超范围需求自动汇总为专业变更报价单，一键发送客户确认，帮你"把钱要回来"。',
+    desc: '所有超范围需求自动汇总为专业变更报价单，一键发送客户确认，帮你"把钱要回来"。',
   },
 ]
 
@@ -93,47 +93,20 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="bg-surface-card border border-border rounded-xl p-5 mb-16">
+        <section className="bg-surface-card border border-border rounded-xl p-5">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-6 h-6 rounded-full bg-brand/20 flex items-center justify-center">
               <svg className="w-3 h-3 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
             </div>
-            <p className="text-sm font-medium text-brand">Pro 提示</p>
+            <p className="text-sm font-medium text-brand">核心洞察</p>
           </div>
           <blockquote className="text-sm text-text-secondary leading-relaxed italic pl-3 border-l-2 border-brand">
             "你报了 $3,000 做 30 小时的项目（$100/小时）。范围蔓延悄悄多了 10 小时没付费，你的实际时薪降到了 $75。<br /><br />
             —— 这不是一个效率问题，这是一个金钱问题。"
             <cite className="block text-xs text-text-muted not-italic mt-2">— eOneBill</cite>
           </blockquote>
-        </section>
-
-        <section className="bg-surface-card border border-border rounded-xl p-5">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-semibold text-text-primary">免费 vs Pro</h3>
-            <span className="text-xs text-brand font-semibold">$4/月 起</span>
-          </div>
-          <div className="space-y-2 text-sm">
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-text-secondary">免费：2个活跃项目 + 基础追踪</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-text-secondary">Pro 全球：<strong>$4/月</strong> · 国内：<strong>¥19/月</strong></span>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-brand flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              <span className="text-text-secondary">无限项目 + 变更报价单 + AI分类</span>
-            </div>
-          </div>
         </section>
       </div>
     </main>

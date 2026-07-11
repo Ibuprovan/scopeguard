@@ -1,4 +1,3 @@
-export type Plan = 'free' | 'pro'
 export type ProjectStatus = 'active' | 'completed' | 'archived'
 export type DeliverableStatus = 'pending' | 'in_progress' | 'completed'
 export type ScopeRequestStatus = 'pending' | 'included_in_quote' | 'quoted'
@@ -8,7 +7,6 @@ export interface Profile {
   id: string
   email: string
   name: string | null
-  plan: Plan
   created_at: string
 }
 

@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 
 export default function ChangeOrderPage() {
   const { id } = useParams<{ id: string }>()
-  const { user, profile, loading: authLoading } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const [project, setProject] = useState<Project | null>(null)
   const [requests, setRequests] = useState<ScopeRequest[]>([])
   const [existingOrder, setExistingOrder] = useState<{ id: string; status: string; share_token: string | null } | null>(null)
@@ -44,8 +44,6 @@ export default function ChangeOrderPage() {
       }).catch(() => setLoading(false))
     }
   }, [user, authLoading, id])
-
-  const isPro = profile?.plan === 'pro'
 
   async function handleGenerate() {
     try {
@@ -109,7 +107,6 @@ export default function ChangeOrderPage() {
       <ChangeOrderPreview
         requests={requests}
         hourlyRate={project.hourly_rate}
-        isPro={isPro}
         onGenerate={handleGenerate}
         onShare={handleShare}
         hasExistingOrder={!!existingOrder}

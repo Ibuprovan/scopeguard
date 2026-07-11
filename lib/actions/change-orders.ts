@@ -35,16 +35,6 @@ export async function createChangeOrder(projectId: string) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('plan')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.plan !== 'pro') {
-    throw new Error('变更报价单是 Pro 功能，请升级到 Pro');
-  }
-
   await verifyProjectOwnership(projectId, user.id);
 
   const { data: requests } = await supabase
@@ -116,16 +106,6 @@ export async function sendChangeOrder(id: string) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error('Not authenticated');
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('plan')
-    .eq('id', user.id)
-    .single();
-
-  if (profile?.plan !== 'pro') {
-    throw new Error('变更报价单是 Pro 功能，请升级到 Pro');
-  }
 
   await verifyChangeOrderOwnership(id, user.id);
 
